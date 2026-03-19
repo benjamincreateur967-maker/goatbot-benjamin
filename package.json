@@ -1,7 +1,7 @@
 {
   "name": "goatbot-benjamin",
   "version": "1.0.0",
-  "description": "GOATBOT Messenger de Benjamin – un bot qui répond automatiquement sur Messenger via Hugging Face GPT-2",
+  "description": "GOATBOT Messenger de Benjamin – Bot Messenger qui répond automatiquement aux messages via Hugging Face GPT-2",
   "main": "src/index.js",
   "scripts": {
     "start": "node src/index.js"
@@ -12,4 +12,5 @@
     "axios": "^1.5.0"
   },
   "license": "MIT"
+}
 }
