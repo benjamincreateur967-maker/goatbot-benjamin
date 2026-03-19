@@ -1,4 +1,3 @@
-// index.js
 const express = require("express");
 const bodyParser = require("body-parser");
 const axios = require("axios");
@@ -6,7 +5,7 @@ const axios = require("axios");
 const app = express();
 app.use(bodyParser.json());
 
-// ⚡ Variables d'environnement (à configurer sur Render)
+// Variables d'environnement (à configurer sur Render)
 const PAGE_ACCESS_TOKEN = process.env.PAGE_ACCESS_TOKEN;
 const VERIFY_TOKEN = process.env.VERIFY_TOKEN;
 const HF_API_KEY = process.env.HF_API_KEY;
@@ -40,14 +39,13 @@ app.post("/webhook", async (req, res) => {
         const userMessage = webhook_event.message.text;
         let botMessage = "";
 
-        // ✅ Réponse personnalisée “Qui t’a créé ?”
         if (
           userMessage.toLowerCase().includes("qui t'a créé") ||
           userMessage.toLowerCase().includes("qui ta créé")
         ) {
-          botMessage = "Mon créateur s'appelle Benjamin Créator, il habite en RDC et m'a conçu pour répondre à toutes vos questions !";
+          botMessage =
+            "Mon créateur s'appelle Benjamin Créator, il habite en RDC et m'a conçu pour répondre à toutes vos questions !";
         } else {
-          // 🔥 Utiliser Hugging Face GPT-2 pour toutes les autres questions
           try {
             const hfResponse = await axios.post(
               "https://api-inference.huggingface.co/models/gpt2",
@@ -60,12 +58,11 @@ app.post("/webhook", async (req, res) => {
           }
         }
 
-        // Envoyer la réponse sur Messenger
         await axios.post(
           `https://graph.facebook.com/v17.0/me/messages?access_token=${PAGE_ACCESS_TOKEN}`,
           {
             recipient: { id: sender_psid },
-            message: { text: botMessage }
+            message: { text: botMessage },
           }
         );
       }
@@ -76,6 +73,5 @@ app.post("/webhook", async (req, res) => {
   }
 });
 
-// Démarrer le serveur
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log(`Serveur GOATBOT actif sur le port ${PORT} !`));
